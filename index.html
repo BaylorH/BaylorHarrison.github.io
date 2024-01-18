@@ -1,0 +1,167 @@
+<!DOCTYPE HTML>
+<!--
+	Massively by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Baylor Harrison Portfolio</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper" class="fade-in">
+
+				<!-- Intro -->
+					<div id="intro">
+						<h1>Baylor Harrison Portfolio<br />
+						</h1>
+						<ul class="icons alt">
+							<li><a href="https://github.com/BaylorH" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+							<li><a href="https://www.linkedin.com/in/baylor-harrison-0ab83626b" class="icon brands alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+						</ul>
+						<p> 
+							Bachelor of Science in Computer Science<br><a href="https://degrees.apps.asu.edu/bachelors/major/ASU00/ESCSEBS/computer-science?init=false&nopassive=true">
+								Arizona State University</a>, May 2025
+							</p>
+						<ul class="actions">
+							<li><a href="#header" class="button icon solid solo fa-arrow-down scrolly">Continue</a></li>
+						</ul>
+					</div>
+
+				<!-- Header -->
+					<header id="header">
+						<a href="index.html" class="logo">Baylor Harrison</a>
+					</header>
+
+				<!-- Nav -->
+					<nav id="nav">
+						<ul class="links">
+							<li class="active"><a href="index.html">Projects</a></li>
+							<li><a href="generic.html">Resume</a></li>
+						</ul>
+						<ul class="icons">
+							<li><a href="https://github.com/BaylorH" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+							<li><a href="https://www.linkedin.com/in/baylor-harrison-0ab83626b" class="icon brands alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+						</ul>
+					</nav>
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- First Post -->
+						<article class="post featured">
+							<header class="major">
+								<h2><a href="#">Effort Logger JavaFX<br />Application</a></h2>
+								<p>In collaboration with 4 other individuals, we used the Scrum framework to develop an Effort Logger JavaFX Application.
+									This project uses a local SQL database to store user credentials and project data. Credentials are required to be robust and
+									further encrypted to provide security and privacy to the user. Once logged in, users may manage the product backlog, run 
+									planning poker sessions, and track projects/progress.
+								</p>
+							</header>
+							<a href="#" class="image main"><img src="images/EffortLogger.jpg" alt="" /></a>
+							<code style="text-align: left; display: block;">
+								submitButton.setOnAction(e -> {<br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// store text fields in variables<br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;enteredUsername = username.getText();<br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;enteredPassword = password.getText();<br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// if provided username and password do not meet criteria<br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (!isValidUsername(enteredUsername) || !isValidPassword(enteredUsername, enteredPassword)) {<br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;displayInvalidInputAlert();<br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return;<br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// if provided username and password meet criteria<br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (isValidUsername(enteredUsername) && isValidPassword(enteredUsername, enteredPassword)) {<br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;try {<br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (db.isUserValid(enteredUsername, enteredPassword)) {<br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;messageLabel.setText("Credentials Valid!");<br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;messageLabel.setTextFill(Color.GREEN);<br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;messageLabel.setVisible(true);<br>
+			
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// transitioning to the main menu after the short delay<br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//return to Main.java<br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mainApp.changeState("LoadingPage");<br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mainApp.start(primaryStage);<br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} else {<br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;messageLabel.setText("Invalid username or password!");<br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;messageLabel.setTextFill(Color.RED);<br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} catch (Exception ex) {<br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;messageLabel.setText("Error connecting to the database!");<br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;messageLabel.setTextFill(Color.RED);<br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} else {<br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;messageLabel.setText("Username or password does not meet the criteria!");<br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;messageLabel.setTextFill(Color.RED);<br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+																
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;messageLabel.setVisible(true);<br>
+								});<br>
+							</code>
+							<ul class="actions special">
+								<li><a href="#" class="button large">View Project</a></li>
+							</ul>
+						</article>
+						
+						
+						<!-- Second Post -->
+						<article class="post featured">
+							<header class="major">
+								<h2><a href="#">1-2 Player Pacman<br />
+								Remake</a></h2>
+								<p>From scratch I created a state-based Java Pacman game with single/multiplayer modes.
+								</p>
+							</header>
+							<a href="#" class="image main"><img src="images/PacmanRemake.jpg" alt="" /></a>
+							<ul class="actions special">
+								<li><a href="#" class="button large">View Project</a></li>
+							</ul>
+						</article>
+					</div>
+
+				<!-- Footer -->
+					<footer id="footer">
+						<section class="split contact">
+							<section>
+								<h3>Phone</h3>
+								<p><a href="#">(208) 999-1801</a></p>
+							</section>
+							<section>
+								<h3>Email</h3>
+								<p><a href="#">bp21harrison@gmail.com</a></p>
+							</section>
+							<section>
+								<h3>Social</h3>
+								<ul class="icons alt">
+									<li><a href="https://github.com/BaylorH" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+									<li><a href="https://www.linkedin.com/in/baylor-harrison-0ab83626b" class="icon brands alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+								</ul>
+							</section>
+						</section>
+						<section>
+						</section>
+					</footer>
+
+				<!-- Copyright -->
+					<div id="copyright">
+						<ul><li>&copy; Untitled</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li></ul>
+					</div>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
