@@ -36,7 +36,7 @@
 
 				<!-- Header -->
 					<header id="header">
-						<a href="index.html" class="logo">Baylor Harrison</a>
+						<a href="#header" class="logo">Baylor Harrison</a>
 					</header>
 
 				<!-- Nav -->
@@ -53,74 +53,251 @@
 
 				<!-- Main -->
 					<div id="main">
+						<!-- Pacman -->
+						<article class="post featured">
+							<header class="major">
+								<h2><a href="#header" id="pacmanTitle">1-2 Player Pacman<br />Remake</a></h2>
+								<p>I developed a state-based Java Pacman game from scratch. I included variations to enhance the game such as a <br>
+									2-player mode and free movement, enabling players to traverse in any direction at any location on the map.
+								</p>
+							</header>
+							<img src="images/Pacmanpic2.jpg" alt="" class="image main" />
 
-						<!-- First Post -->
-						<article class="post featured">
-							<header class="major">
-								<h2><a href="#">Effort Logger JavaFX<br />Application</a></h2>
-								<p>In collaboration with 4 other individuals, we used the Scrum framework to develop an Effort Logger JavaFX Application.
-									This project uses a local SQL database to store user credentials and project data. Credentials are required to be robust and
-									further encrypted to provide security and privacy to the user. Once logged in, users may manage the product backlog, run 
-									planning poker sessions, and track projects/progress.
-								</p>
-							</header>
-							<a href="#" class="image main"><img src="images/EffortLogger.jpg" alt="" /></a>
+							<p>
+								Since I freehanded everything, the most time-consuming part of the project was creating the GUI. The map took 
+								the longest as I had to run the code after each wall to check how it aligned. Additionally, the players posed 
+								complexity, especially considering their animation and the fact that they undergo changes when a power-up is 
+								collected. Here is a snippet demonstrating how I coded this:
+							</p>
 							<code style="text-align: left; display: block;">
-								submitButton.setOnAction(e -> {<br>
-									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// store text fields in variables<br>
-									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;enteredUsername = username.getText();<br>
-									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;enteredPassword = password.getText();<br>
-									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// if provided username and password do not meet criteria<br>
-									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (!isValidUsername(enteredUsername) || !isValidPassword(enteredUsername, enteredPassword)) {<br>
-									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;displayInvalidInputAlert();<br>
-									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return;<br>
-									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
-									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// if provided username and password meet criteria<br>
-									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (isValidUsername(enteredUsername) && isValidPassword(enteredUsername, enteredPassword)) {<br>
-									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;try {<br>
-									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (db.isUserValid(enteredUsername, enteredPassword)) {<br>
-									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;messageLabel.setText("Credentials Valid!");<br>
-									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;messageLabel.setTextFill(Color.GREEN);<br>
-									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;messageLabel.setVisible(true);<br>
-			
-									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// transitioning to the main menu after the short delay<br>
-									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//return to Main.java<br>
-									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mainApp.changeState("LoadingPage");<br>
-									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mainApp.start(primaryStage);<br>
-									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} else {<br>
-									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;messageLabel.setText("Invalid username or password!");<br>
-									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;messageLabel.setTextFill(Color.RED);<br>
-									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
-									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} catch (Exception ex) {<br>
-									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;messageLabel.setText("Error connecting to the database!");<br>
-									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;messageLabel.setTextFill(Color.RED);<br>
-									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
-									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} else {<br>
-									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;messageLabel.setText("Username or password does not meet the criteria!");<br>
-									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;messageLabel.setTextFill(Color.RED);<br>
-									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
-																
-									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;messageLabel.setVisible(true);<br>
-								});<br>
+								public void render(Graphics g) {<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;if(getId() == ID.Player) {<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pColor = p1Color;<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;else if(getId() == ID.Player2) {<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pColor = p2Color;<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+								<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;if(timerA <= 0) {<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//base shape of pacman<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;g.setColor(pColor);<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;g.fillOval((int)x, (int)y, 32, 32);<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;timerA = 80;<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;else if(timerA >= 45){<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;g.setColor(pColor);<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;g.fillOval((int)x, (int)y, 32, 32);<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;timerA--;<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;else{		//creating an effect looking like the mouth is opening and closing<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;g.setColor(pColor);<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;g.fillOval((int)x, (int)y, 32, 32);<br>
+										
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(getVelX() == 2) { //moving right<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;g.setColor(Color.black);<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Polygon triangle = new Polygon();<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;triangle.addPoint((int)x+13, (int)y+16); //left<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;triangle.addPoint((int)x+32, (int)y); //top right<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;triangle.addPoint((int)x+32, (int)y+32); //bottom right<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;g.fillPolygon(triangle);<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
 							</code>
-							<ul class="actions special">
-								<li><a href="#" class="button large">View Project</a></li>
-							</ul>
+
+							<br>
+							<p>
+								The most intricate aspect of my project involved the creation of 3 of my own distinct tracking algorithms for the 
+								ghosts. In essence, the ghost's direction is calculated based on its relative position to the player by adjusting 
+								probability values. This algorithm introduced dynamic and responsive behavior. Here is a snippet of the beginning 
+								of Blinky's tracking algorithm:
+							</p>
+
+							<code style="text-align: left; display: block;">
+								//tracking algorithm for the rest of the game<br>
+								else {<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;inLines();<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;if((velX==0 && velY==0) || (coolDownTimerCheck() && turnOpen()==true)) {<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(int k = 0; k < handler.object.size(); k++) {<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GameObject tempObject = handler.object.get(k);<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(tempObject.getId() == ID.Player){		//tempObject is player<br>	
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a = tempObject.getX()-x;		//difference between the players's x position and Blinky's<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;b = tempObject.getY()-y;		//difference between the players's y position and Blinky's<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(Math.abs(a) > Math.abs(b)) {<br>
+								//Blinky is farther from the player with respect to x (x distance greater than y distance)<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(a>0) {			//player is to the right of Blinky<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(b>0) {		//player is below Pinky<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int number = r.nextInt(12)+1;		//decides Blinky's direction<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(number<=6){		//Blinky is most likely to travel right<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;velX=1;<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else if(number==7) {<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;velX=-1;<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else if(number<=11) {		//Blinky is likely to travel down<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;velY=1;<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else if(number==12) {<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;velY=-1;<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>	
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+							</code>
+
+							<img src="images/PacmanRemake.jpg" alt="" class="image main" />
 						</article>
-						
-						
-						<!-- Second Post -->
+
+						<!-- Effort Logger -->
 						<article class="post featured">
 							<header class="major">
-								<h2><a href="#">1-2 Player Pacman<br />
-								Remake</a></h2>
-								<p>From scratch I created a state-based Java Pacman game with single/multiplayer modes.
+								<h2><a href="#" id="effortLoggerTitle">Effort Logger JavaFX<br />Application</a></h2>
+
+								<p>In collaboration with 4 other individuals, we used the Scrum framework to develop an Effort Logger JavaFX Application 
+									with an emphasis on backend development. This project uses a local SQL database to store user credentials and project 
+									data. Once logged in, users may manage the product backlog, run planning poker sessions, and track projects/progress.
+									We tested using JUnit.
 								</p>
 							</header>
-							<a href="#" class="image main"><img src="images/PacmanRemake.jpg" alt="" /></a>
-							<ul class="actions special">
-								<li><a href="#" class="button large">View Project</a></li>
-							</ul>
+							<img src="images/EffortLoggerBacklog.jpg" alt="" class="image main" />
+
+							<p>
+								Credentials are required to be robust and further encrypted to provide security and privacy to the user. Here is a 
+								snippet of code demonstrating where the program encrypts and uploads a new user to the database:
+							</p>
+							<code style="text-align: left; display: block;">
+								public void addUser(String userToCheck, String passToAdd) {		//database insert for user and pass<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;try {<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Class.forName("com.mysql.cj.jdbc.Driver");<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Connection connection = DriverManager.getConnection(url, username, password);<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String query1 = "insert into login(login_username, login_password) VALUES(?,?)";<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PreparedStatement insertion= connection.prepareStatement(query1);<br>
+							
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//ENCRYPT/DECRYPT SETUP<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String KeyBytes = "jlAuflVWNIxvviCXDNXYPdWmyjuFjlpJ";<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SecretKey secretKey = new SecretKeySpec(KeyBytes.getBytes(), "AES");<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;byte[] fixedIV = new byte[16];<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Arrays.fill(fixedIV, (byte) 0);<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cipher.init(Cipher.ENCRYPT_MODE, secretKey, new IvParameterSpec(fixedIV));<br>
+							
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//ENCRYPT<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;byte[] encryptedUsernameBytes = cipher.doFinal(userToCheck.getBytes());<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String encryptedUsername = Base64.getEncoder().encodeToString(encryptedUsernameBytes);<br>
+							
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;byte[] encryptedPasswordBytes = cipher.doFinal(passToAdd.getBytes());<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String encryptedPassword = Base64.getEncoder().encodeToString(encryptedPasswordBytes);<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//send to database<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;insertion.setString(1, encryptedUsername);<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;insertion.setString(2, encryptedPassword);<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;insertion.executeUpdate();<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;} catch(Exception error) {<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(error);<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+								}<br>
+							</code>
+							<img src="images/EffortLoggerSignUp.jpg" alt="" class="image main" />
+						</article>
+
+						<!-- First and Follow Sets -->
+						<article class="post featured">
+							<header class="major">
+								<h2><a href="#" id="firstFollowTitle">Grammar Compiler Analyzer</a></h2>
+
+								<p>
+									This C++ project analyzes grammar within the context of a compiler construction. The program takes as input the 
+									grammar of a compiler language and provides valuables insights on properties about the language. Here is an example 
+									input for the program:
+								</p>
+							</header>
+							<img src="images/FirstFollowSet.jpg" alt="" class="image main" />
+							
+							<p>
+								<br>Here is the output of the program given the example input above:
+							</p>
+							<img src="images/FirstFollowSetTerm.jpg" alt="" class="image main" />
+
+							<p>
+								The analyzer starts by internally representing this input grammar using data structures. The program then determines 
+								terminals, nonterminals, useless symbols, and calculates first and follow sets. Calculating follow sets revealed to be the 
+								most complex part of the project, requiring iterative refinement and effective handling of epsilon productions. Here is a 
+								snippet of the code for calculating the follow sets:
+							</p>
+							<code style="text-align: left; display: block;">
+								while(change){<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;change = false;<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;for (size_t i = 0; i < rules.size(); i++) {		//iterate through all grammar rules<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//iterate through each symbol in the RHS (right hand side) of the rule<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for (size_t j = 0; j < rules[i].RHS.size(); j++) {<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(j+1 < rules[i].RHS.size()){		//if not at the end of RHS<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(!isTerminal(rules[i].RHS[j])){		//if the symbol is a non-terminal<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool loopAgain = true;<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int p = 1;		//offset from j(see below when used)<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;while(loopAgain){<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;loopAgain = false;<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int l, r;<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//find the index of the symbol in the followSets<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(size_t n = 0; n < followSets.size(); n++){<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(followSets[n].symbol == rules[i].RHS[j]){<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;l = n;<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//find the index of the next symbol in the firstSets<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(size_t n = 0; n < firstSets.size(); n++){<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(firstSets[n].symbol == rules[i].RHS[j+p]){<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;r = n;<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//update followSet based on firstSet of next symbol<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t oldSetSize = followSets[l].followSet.size();<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;followSets[l].followSet = Union(followSets[l].followSet, firstSets[r].firstSet);<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(followSets[l].followSet.size() != oldSetSize){<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;change = true;<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//if epsilon is in the firstSet of next symbol, examine next symbol too<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(epsilonInList(firstSets[r].firstSet)){<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p++;<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(p < rules[i].RHS.size()){<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;loopAgain = true;<br>
+							</code>
+						</article>
+
+						<!-- 2d game -->
+						<article class="post featured">
+							<header class="major">
+								<h2><a href="#" id="gameID">2D game</a></h2>
+
+								<p>
+									Working in a team of 4, we built this project in JavaScript and utilized the p5.js library.
+								</p>
+							</header>
+							
+							<img src="images/game2d.jpg" alt="" class="image main" />
+
+							<p>
+								In the brick breaker mini-game, the `checkCollision()` function serves as a pivotal component. It efficiently 
+								iterates through the array of bricks, detecting collisions with both balls, thus minimizing redundant computations 
+								and enhancing performance, all while managing power-ups and sound effects. Here's a snippet of that method 
+								dealing with the main ball:
+							</p>
+							<code style="text-align: left; display: block;">
+								function checkCollision() {<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;for (var i = 0; i < n; i++) {<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (x >= bricksX[i] && x <= bricksX[i] + 50) {<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (y >= bricksY[i] && y <= bricksY[i] + 10) {<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//handle collision with the first ball<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;soundFX2.play();<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bricksX[i] = 600;<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;score += 10;<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;totalScore += 25;<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;points += 25;<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;velY *= -1;<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Handle power-ups<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (rand == i) {<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LIVES++;<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (rand2 == i) {<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;releaseSecondBall();<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+							</code>
+
+							<img src="images/brickBreaker.jpg" alt="" class="image main" />
 						</article>
 					</div>
 
@@ -163,5 +340,51 @@
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
 
+			<script>
+				// Wait for the document to be ready
+				document.addEventListener("DOMContentLoaded", function () {
+					// Find the title link element for Effort Logger
+					var effortLoggerTitleLink = document.getElementById("effortLoggerTitle");
+				
+					// Add a click event listener for Effort Logger
+					effortLoggerTitleLink.addEventListener("click", function (event) {
+						// Prevent the default behavior (following the link)
+						event.preventDefault();
+				
+						// Add a class to the link (you can style it accordingly in your CSS)
+						effortLoggerTitleLink.classList.add("clicked");
+					});
+				
+					// Find the title link element for Pacman
+					var pacmanTitleLink = document.getElementById("pacmanTitle");
+				
+					// Add a click event listener for Pacman
+					pacmanTitleLink.addEventListener("click", function (event) {
+						// Prevent the default behavior (following the link)
+						event.preventDefault();
+				
+						// Add a class to the link (you can style it accordingly in your CSS)
+						pacmanTitleLink.classList.add("clicked");
+					});
+				});
+
+				// Wait for the document to be ready
+				document.addEventListener("DOMContentLoaded", function () {
+					// Find the title link element for First and Follow Sets
+					var firstFollowTitleLink = document.getElementById("firstFollowTitle");
+			
+					// Add a click event listener for First and Follow Sets
+					firstFollowTitleLink.addEventListener("click", function (event) {
+						// Prevent the default behavior (following the link)
+						event.preventDefault();
+				
+						// Add a class to the link (you can style it accordingly in your CSS)
+						firstFollowTitleLink.classList.add("clicked");
+					});
+    			});
+			</script>
+			  
+			  
+			  
 	</body>
 </html>
